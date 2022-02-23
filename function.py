@@ -1,5 +1,6 @@
 import simpleaudio as sa  # importing the audio playing library. Can be removed in vibrators
 import os
+import time
 
 # Dictionary of alphanumeric and their respective morse code
 code = {'A': '.-',
@@ -127,21 +128,41 @@ space_sound = sa.WaveObject.from_wave_file(os.path.abspath("morse_code/space.wav
 
 
 # code needs to be tweeked to match vibrator
+
 '''
-def morse_play(morse):
-    T = 200
+DOT = 200000
+DASH = 600000
+GAP = 200000
+SPACE = 1400000
+'''
+
+'''def morse_play(morse):
+    #T = 200000ms
     for i in morse:
         if i == '_':
-            t = 3*T # feed t to vibrator 
-            s = 3*T # vibrator off
+            t_dash = time.time_ns() + DASH
+            while time.time_ns() < t_dash:
+              return True
+            t_gap = time.time_ns() + GAP
+            while time.time_ns() < t_gap:
+              return False
 
         if i == '.':
-            t = T
-            s = 3*T
+            t_dot = time.time_ns() + DOT
+            while time.time_ns() < t_dot:
+              return True
+            t_gap = time.time_ns() + GAP
+            while time.time_ns() < t_gap:
+              return False
 
         if i == ' ':
-            t = 7*T #vibrator off
-'''
+            t_space = time.time_ns() + SPACE
+            while time.time_ns() < t_dot:
+              return True
+            t_gap = time.time_ns() + GAP
+            while time.time_ns() < t_gap:
+              return False
+
 # play the sound respect to the morse
 def morse_play(morse):
     for i in morse:
@@ -156,3 +177,4 @@ def morse_play(morse):
         if i == ' ':
             space_play = space_sound.play()
             space_play.wait_done()
+'''
